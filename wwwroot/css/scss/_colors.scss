@@ -1,0 +1,40 @@
+$principal: #5FBFF9;
+$principal-dark: #5863F8;
+$principal-light: #16BAC5;
+
+$cinza-light: #EFE9F4;
+$cinza-dark: #171D1C;
+
+//background:
+.bg-principal {
+    background-color: $principal;
+}
+.bg-principal-dark {
+    background-color: $principal-dark;
+}
+.bg-principal-light {
+    background-color: $principal-light;
+}
+.bg-cinza-light {
+    background-color: $cinza-light;
+}
+.bg-cinza-dark {
+    background-color: $cinza-dark;
+}
+
+//text color:
+.text-principal {
+    color: $principal;
+}
+.text-principal-dark {
+    color: $principal-dark;
+}
+.text-principal-light {
+    color: $principal-light;
+}
+.text-cinza-light {
+    color: $cinza-light;
+}
+.text-cinza-dark {
+    color: $cinza-dark;
+}

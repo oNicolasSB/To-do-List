@@ -1,0 +1,21 @@
+@model Usuario
+
+<section class="usuario py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="titulo d-flex justify-content-between align-items-center">
+                <h2 class="mb-3 text-principal-dark">Dados pessoais: </h2>
+                <a asp-action="Edit" asp-controller="Usuario" class="btn btn-principal-light">Editar</a>
+                </div>
+                <p class="mb-0">Nome: </p>
+                <p class="fs-4">@Model.Nome</p>
+                <p class="mb-0">E-mail: </p>
+                <p class="fs-4">@Model.Email</p>
+                <hr class="text-principal-light">
+                <h2 class="mb-3 text-principal-dark">Senha: </h2>
+                <a asp-action="AltSenha" asp-controller="Usuario" class="btn btn-danger">Alterar Senha</a>
+            </div>
+        </div>
+    </div>
+</section>

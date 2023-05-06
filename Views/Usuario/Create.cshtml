@@ -1,35 +1,46 @@
 @model CadastroViewModel
 
-<section class="login">
+<section class="cadastro py-5">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <form asp-action="Create">
-                    <div class="email">
-                        <label asp-for="@Model.Email"><span>E-mail: </span></label>
-                        <input type="text" asp-for=@Model.Email>
-                        <span class="text-danger" asp-validation-for="@Model.Email"></span>
+            <div class="col-6 offset-3">
+                <form asp-action="Create" class="p-5 bg-cinza-light rounded-3">
+                <h2 class="text-principal-dark text-center mb-3">Registro</h2>
+                    <div class="col-12 mb-3 email">
+                        <p class="mb-0">
+                            <label class="form-label" asp-for="@Model.Email"><span>E-mail: </span></label>
+                        </p>
+                        <input class="form-control" type="text" asp-for=@Model.Email>
+                        <span class="text-danger form-text" asp-validation-for="@Model.Email"></span>
                     </div>
-                    <div class="nome">
-                        <label asp-for="@Model.Nome"><span>Nome: </span></label>
-                        <input type="text" asp-for=@Model.Nome>
-                        <span class="text-danger" asp-validation-for="@Model.Nome"></span>
+                    <div class="col-12 mb-3 nome">
+                        <p class="mb-0">
+                            <label class="form-label" asp-for="@Model.Nome"><span>Nome: </span></label>
+                        </p>
+                        <input class="form-control" type="text" asp-for=@Model.Nome>
+                        <span class="text-danger form-text" asp-validation-for="@Model.Nome"></span>
                     </div>
-                    <div class="senha">
-                        <label asp-for="@Model.Senha"><span>Senha: </span></label>
-                        <input type="text" asp-for=@Model.Senha>
-                        <span class="text-danger" asp-validation-for="@Model.Senha"></span>
-                        <label asp-for="@Model.ConfSenha"><span>Senha: </span></label>
-                        <input type="text" asp-for=@Model.ConfSenha>
-                        <span class="text-danger" asp-validation-for="@Model.ConfSenha"></span>
-                    </div>
-                    <div class="text-center">
-                        <div>
-                            <button type="submit" class="btn btn-primary botao">Cadastro</button>
+                    <div class="col-12 mb-3 senha row">
+                        <div class="col-6">
+                            <p class="mb-0">
+                                <label class="form-label" asp-for="@Model.Senha"><span>Senha: </span></label>
+                            </p>
+                            <input class="form-control" type="password" asp-for=@Model.Senha>
+                            <span class="text-danger form-text" asp-validation-for="@Model.Senha"></span>
                         </div>
-                        <div>
-                            <span>Já tem uma conta?</span><a asp-action="Login" asp-controller="Usuario">Faça login.</a>
+                        <div class="col-6">
+                            <p class="mb-0">
+                                <label class="form-label" asp-for="@Model.ConfSenha"><span>Confirmação da senha:
+                                    </span></label>
+                            </p>
+                            <input class="form-control" type="password" asp-for=@Model.ConfSenha>
+                            <span class="text-danger form-text" asp-validation-for="@Model.ConfSenha"></span>
                         </div>
+                    </div>
+                    <div
+                        class="col-12 text-center mt-5 d-flex flex-column justify-content-center align-items-center gap-4">
+                        <button type="submit" class="btn btn-principal-dark botao">Cadastro</button>
+                        <p>Já tem uma conta? <a asp-action="Login" asp-controller="Usuario">Faça login.</a> </p>
                     </div>
                 </form>
             </div>

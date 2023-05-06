@@ -1,0 +1,33 @@
+@model Usuario
+
+<section class="cadastro py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <form asp-action="Edit" class="p-5 bg-cinza-light rounded-3">
+                    <input type="hidden" value=@Model.IdUsuario asp-for="@Model.IdUsuario">
+                <h2 class="text-principal-dark text-center mb-3">Alterar Dados</h2>
+                    <div class="col-12 mb-3 email">
+                        <p class="mb-0">
+                            <label class="form-label" asp-for="@Model.Email"><span>E-mail: </span></label>
+                        </p>
+                        <input class="form-control" type="text" asp-for=@Model.Email>
+                        <span class="text-danger form-text" asp-validation-for="@Model.Email"></span>
+                    </div>
+                    <div class="col-12 mb-3 nome">
+                        <p class="mb-0">
+                            <label class="form-label" asp-for="@Model.Nome"><span>Nome: </span></label>
+                        </p>
+                        <input class="form-control" type="text" asp-for=@Model.Nome>
+                        <span class="text-danger form-text" asp-validation-for="@Model.Nome"></span>
+                    </div>
+                    <div
+                        class="col-12 text-center mt-5 d-flex flex-column justify-content-center align-items-center gap-4">
+                        <button type="submit" class="btn btn-principal-dark botao">Alterar</button>
+                        <a asp-action="Index" asp-controller="Usuario" class="btn btn-principal">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

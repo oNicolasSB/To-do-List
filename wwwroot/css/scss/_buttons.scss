@@ -1,0 +1,27 @@
+.btn-principal {
+    background-color: $principal;
+    color: $cinza-light;
+    transition: all 0.2s;
+    &:hover {
+        background-color: $principal-dark;
+        color: $cinza-light;
+    }
+}
+.btn-principal-dark {
+    background-color: $principal-dark;
+    color: $cinza-light;
+    transition: all 0.2s;
+    &:hover {
+        background-color: $principal-light;
+        color: $cinza-light;
+    }
+}
+.btn-principal-light {
+    background-color: $principal-light;
+    color: $cinza-light;
+    transition: all 0.2s;
+    &:hover {
+        background-color: $principal;
+        color: $cinza-light;
+    }
+}

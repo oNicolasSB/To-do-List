@@ -18,6 +18,13 @@ public class UsuarioController : Controller
         _db = db;
     }
 
+    [Authorize]
+    public IActionResult Index()
+    {
+        var usuario = _db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value));
+        return View(usuario);
+    }
+
     [HttpGet]
     public IActionResult Create()
     {
@@ -65,7 +72,8 @@ public class UsuarioController : Controller
             {
                 new Claim(ClaimTypes.Email, usuario.Email),
                 new Claim(ClaimTypes.Name, usuario.Nome),
-                new Claim(ClaimTypes.Sid, usuario.IdUsuario.ToString())
+                new Claim(ClaimTypes.Sid, usuario.IdUsuario.ToString()),
+                new Claim(ClaimTypes.Role, "usuario")
             };
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -83,6 +91,7 @@ public class UsuarioController : Controller
         }
         else
         {
+            ModelState.AddModelError("Senha", "Senha incorreta.");
             return View(login);
         }
     }
@@ -93,9 +102,55 @@ public class UsuarioController : Controller
 
         if (returnUrl is null)
         {
+
             return RedirectToAction("Index", "Home");
         }
 
         return Redirect(returnUrl);
+    }
+
+    [HttpGet]
+    [Authorize]
+    public IActionResult Edit()
+    {
+        var usuario = _db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value));
+        if (usuario is null)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+        return View(usuario);
+    }
+    [HttpPost]
+    [Authorize]
+    public IActionResult Edit(Usuario usuario)
+    {
+        if(_db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value)).IdUsuario != usuario.IdUsuario)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+        var usuariooriginal = _db.Usuarios.Find(usuario.IdUsuario);
+        if (usuariooriginal is null)
+            return RedirectToAction("Index", "Home");
+        ModelState.Remove("Senha");
+        ModelState.Remove("IdUsuario");
+        if (!ModelState.IsValid)
+        {
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+        if (_db.Usuarios.FirstOrDefault(u => u.Email == usuario.Email && u.IdUsuario != usuariooriginal.IdUsuario) is not null)
+        {
+            ModelState.AddModelError("Email", "E-mail em uso");
+            return View(usuario);
+        }
+
+
+        usuariooriginal.Nome = usuario.Nome;
+        usuariooriginal.Email = usuario.Email;
+        _db.SaveChanges();
+        return RedirectToAction("Index", "Usuario");
     }
 }

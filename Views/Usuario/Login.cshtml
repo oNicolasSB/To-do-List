@@ -1,32 +1,33 @@
 @model LoginViewModel
 
-<section class="login">
+<section class="login py-5">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <form asp-action="Login">
-                    <div class="email">
-                        <label asp-for="@Model.Email"><span>E-mail: </span></label>
-                        <input type="text" asp-for=@Model.Email>
-                        <span class="text-danger" asp-validation-for="@Model.Email"></span>
+            <div class="col-6 offset-3">
+                <form asp-action="Login" class="p-5 bg-cinza-light rounded-3">
+                    <h2 class="text-principal-dark text-center mb-3">Login</h2>
+                    <div class="col-12 mb-3 email">
+                        <p class="mb-0">
+                        <label class="form-label" asp-for="@Model.Email">E-mail: </label>
+                        </p>
+                        <input class="form-control" type="text" asp-for=@Model.Email>
+                        <span class="text-danger form-text" asp-validation-for="@Model.Email"></span>
                     </div>
-                    <div class="senha">
-                        <label asp-for="@Model.Senha"><span>Senha: </span></label>
-                        <input type="text" asp-for=@Model.Senha>
-                        <span class="text-danger" asp-validation-for="@Model.Senha"></span>
+                    <div class="col-12 mb-3 senha">
+                        <p class="mb-0">
+                        <label class="form-label" asp-for="@Model.Senha"><span>Senha: </span></label>
+                        </p>
+                        <input class="form-control" type="password" asp-for=@Model.Senha>
+                        <span class="text-danger form-text" asp-validation-for="@Model.Senha"></span>
                     </div>
-                    <div class="lembrar">
+                    <div class="col-12 lembrar">
                         <input type="checkbox" asp-for="@Model.Lembrar">
-                        <label asp-for="@Model.Lembrar"><span id="lembrar">Lembrar de mim.</span></label>
+                        <label class="form-label" asp-for="@Model.Lembrar"><span id="lembrar">Lembrar de mim.</span></label>
                     </div>
-                    <div class="text-center">
-                        <div>
-                            <button type="submit" class="btn btn-primary botao">Login</button>
-                        </div>
-                        <div>
-                            <span>Não tem uma conta?</span><a asp-action="Create"
-                                asp-controller="Usuario">Registre-se.</a>
-                        </div>
+                    <div class="col-12 text-center mt-5 d-flex flex-column justify-content-center align-items-center gap-4">
+                            <button type="submit" class="btn btn-principal-dark botao">Login</button>
+                            <p>Não tem uma conta? <a asp-action="Create"
+                                asp-controller="Usuario">Registre-se.</a> </p>
                     </div>
                 </form>
             </div>
