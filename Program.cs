@@ -1,6 +1,6 @@
 using todolist.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +8,18 @@ var builder = WebApplication.CreateBuilder(args);
 //mvc e razor runtime compilation
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
- //adição do serviço do banco de dados
+//autenticação
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option=>
+    {
+        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        option.SlidingExpiration = true;
+        option.LoginPath = "/Usuario/Login";
+        option.LogoutPath = "/Usuario/Logout";
+    }
+);
+builder.Services.AddHttpContextAccessor();
+
+//adição do serviço do banco de dados
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlite("Data source=data.db");

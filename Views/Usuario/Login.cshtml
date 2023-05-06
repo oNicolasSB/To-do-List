@@ -1,0 +1,35 @@
+@model LoginViewModel
+
+<section class="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form asp-action="Login">
+                    <div class="email">
+                        <label asp-for="@Model.Email"><span>E-mail: </span></label>
+                        <input type="text" asp-for=@Model.Email>
+                        <span class="text-danger" asp-validation-for="@Model.Email"></span>
+                    </div>
+                    <div class="senha">
+                        <label asp-for="@Model.Senha"><span>Senha: </span></label>
+                        <input type="text" asp-for=@Model.Senha>
+                        <span class="text-danger" asp-validation-for="@Model.Senha"></span>
+                    </div>
+                    <div class="lembrar">
+                        <input type="checkbox" asp-for="@Model.Lembrar">
+                        <label asp-for="@Model.Lembrar"><span id="lembrar">Lembrar de mim.</span></label>
+                    </div>
+                    <div class="text-center">
+                        <div>
+                            <button type="submit" class="btn btn-primary botao">Login</button>
+                        </div>
+                        <div>
+                            <span>Não tem uma conta?</span><a asp-action="Create"
+                                asp-controller="Usuario">Registre-se.</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

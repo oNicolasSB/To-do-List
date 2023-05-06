@@ -2,6 +2,10 @@
     <div class="row">
         <div class="col-12">
             <h1>Página Index</h1>
+            @if(User.Identity.IsAuthenticated)
+            {
+                <h3>Olá @User.Identity.Name</h3>
+            }
         </div>
     </div>
 </div>

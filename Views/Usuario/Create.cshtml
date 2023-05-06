@@ -1,0 +1,38 @@
+@model CadastroViewModel
+
+<section class="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form asp-action="Create">
+                    <div class="email">
+                        <label asp-for="@Model.Email"><span>E-mail: </span></label>
+                        <input type="text" asp-for=@Model.Email>
+                        <span class="text-danger" asp-validation-for="@Model.Email"></span>
+                    </div>
+                    <div class="nome">
+                        <label asp-for="@Model.Nome"><span>Nome: </span></label>
+                        <input type="text" asp-for=@Model.Nome>
+                        <span class="text-danger" asp-validation-for="@Model.Nome"></span>
+                    </div>
+                    <div class="senha">
+                        <label asp-for="@Model.Senha"><span>Senha: </span></label>
+                        <input type="text" asp-for=@Model.Senha>
+                        <span class="text-danger" asp-validation-for="@Model.Senha"></span>
+                        <label asp-for="@Model.ConfSenha"><span>Senha: </span></label>
+                        <input type="text" asp-for=@Model.ConfSenha>
+                        <span class="text-danger" asp-validation-for="@Model.ConfSenha"></span>
+                    </div>
+                    <div class="text-center">
+                        <div>
+                            <button type="submit" class="btn btn-primary botao">Cadastro</button>
+                        </div>
+                        <div>
+                            <span>Já tem uma conta?</span><a asp-action="Login" asp-controller="Usuario">Faça login.</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
