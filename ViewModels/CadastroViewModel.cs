@@ -13,7 +13,7 @@ public class CadastroViewModel
 
     [Required(ErrorMessage = "O campo {0} deve ser preenchido."), StringLength(32)]
     public string Senha { get; set; }
-
+    [Display(Name = "Confirmar Nova Senha")]
     [Required(ErrorMessage = "O campo {0} deve ser preenchido."), StringLength(32)]
     [Compare(nameof(Senha), ErrorMessage = "As senhas devem ser iguais.")]
     public string ConfSenha { get; set; }

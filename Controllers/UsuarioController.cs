@@ -153,4 +153,20 @@ public class UsuarioController : Controller
         _db.SaveChanges();
         return RedirectToAction("Index", "Usuario");
     }
+    [HttpGet]
+    public IActionResult AltSenha()
+    {
+        var alterarSenha = new AlterarSenhaViewModel();
+        return View(alterarSenha);
+    }
+    [HttpPost]
+    public IActionResult AltSenha(AlterarSenhaViewModel altSenha)
+    {
+        if(!ModelState.IsValid) return View(altSenha);
+        var usuario = _db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value));
+        if(usuario is null) return RedirectToAction("Index", "Home");
+        usuario.Senha = HashPassword(altSenha.NovaSenha, 10);
+        _db.SaveChanges();
+        return RedirectToAction("Index", "Usuario");
+    }
 }

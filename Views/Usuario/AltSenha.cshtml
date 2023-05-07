@@ -1,0 +1,42 @@
+@model AlterarSenhaViewModel
+
+<section class="cadastro py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <form asp-action="AltSenha" asp-controller="Usuario" class="p-5 bg-cinza-light rounded-3">
+                    <h2 class="text-principal-dark text-center mb-3">Alterar Senha</h2>
+                    <div class="col-12 mb-3 senha">
+                        <p class="mb-0">
+                            <label class="form-label" asp-for="@Model.SenhaOriginal"><span>Senha Atual: </span></label>
+                        </p>
+                        <input class="form-control" type="password" asp-for=@Model.SenhaOriginal>
+                        <span class="text-danger form-text" asp-validation-for="@Model.SenhaOriginal"></span>
+                    </div>
+                    <div class="col-12 mb-3 nova-senha row">
+                        <div class="col-6">
+                            <p class="mb-0">
+                                <label class="form-label" asp-for="@Model.NovaSenha"><span>Nova senha: </span></label>
+                            </p>
+                            <input class="form-control" type="password" asp-for=@Model.NovaSenha>
+                            <span class="text-danger form-text" asp-validation-for="@Model.NovaSenha"></span>
+                        </div>
+                        <div class="col-6">
+                            <p class="mb-0">
+                                <label class="form-label" asp-for="@Model.ConfNovaSenha"><span>Confirmação da nova
+                                        senha: </span></label>
+                            </p>
+                            <input class="form-control" type="password" asp-for=@Model.ConfNovaSenha>
+                            <span class="text-danger form-text" asp-validation-for="@Model.ConfNovaSenha"></span>
+                        </div>
+                    </div>
+                    <div
+                        class="col-12 text-center mt-5 d-flex flex-column justify-content-center align-items-center gap-4">
+                        <button type="submit" class="btn btn-danger botao">Alterar</button>
+                        <button type="submit" class="btn btn-principal botao">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
