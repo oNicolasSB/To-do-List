@@ -1,0 +1,28 @@
+@model List<Lista>
+
+<section class="principal py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <h3 class="text-principal-dark mb-0">Listas: </h3>
+                <ul class="list-unstyled mb-0 d-flex flex-column gap-3">
+                    @foreach (var item in Model)
+                    {
+                        <li class="bg-cinza-dark rounded-3 d-flex lista-item">
+                            <a href="#" class="w-100 p-3 text-decoration-none">
+                                <p class="text-cinza-light mb-0">Lista 1</p>
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <hr class="text-principal my-3">
+                </hr>
+                <button id="criarLista" class="btn btn-principal-dark p-3 w-100">Adicionar</button>
+            </div>
+
+            <div id="criarListaModal" class="adicionar-lista p-3 bg-cinza-light rounded-3 d-none">
+                <partial name="_Create" model="@new Lista()"></partial>
+            </div>
+        </div>
+    </div>
+</section>

@@ -13,5 +13,5 @@ public class Lista
     [ForeignKey("Usuario")]
     public int FkUsuario { get; set; }
     public Usuario Usuario { get; set; }
-    public ICollection<Tarefa> Tarefas { get; set; }
+    public ICollection<Tarefa>? Tarefas { get; set; }
 }

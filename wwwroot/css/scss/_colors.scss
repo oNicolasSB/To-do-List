@@ -3,6 +3,7 @@ $principal-dark: #5863F8;
 $principal-light: #16BAC5;
 
 $cinza-light: #EFE9F4;
+$cinza-principal: #838388;
 $cinza-dark: #171D1C;
 
 //background:
@@ -17,6 +18,9 @@ $cinza-dark: #171D1C;
 }
 .bg-cinza-light {
     background-color: $cinza-light;
+}
+.bg-cinza-principal {
+    background-color: $cinza-principal;
 }
 .bg-cinza-dark {
     background-color: $cinza-dark;
@@ -34,6 +38,9 @@ $cinza-dark: #171D1C;
 }
 .text-cinza-light {
     color: $cinza-light;
+}
+.text-cinza-principal {
+    color: $cinza-principal;
 }
 .text-cinza-dark {
     color: $cinza-dark;

@@ -154,12 +154,14 @@ public class UsuarioController : Controller
         return RedirectToAction("Index", "Usuario");
     }
     [HttpGet]
+    [Authorize]
     public IActionResult AltSenha()
     {
         var alterarSenha = new AlterarSenhaViewModel();
         return View(alterarSenha);
     }
     [HttpPost]
+    [Authorize]
     public IActionResult AltSenha(AlterarSenhaViewModel altSenha)
     {
         if(!ModelState.IsValid) return View(altSenha);
