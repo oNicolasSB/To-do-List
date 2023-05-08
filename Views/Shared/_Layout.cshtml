@@ -17,22 +17,29 @@
                 <div class="col-12 d-flex justify-content-between align-items-center">
                     <div class="logo">
                         <h2 class="mb-0">
-                        <a asp-action="Index" asp-controller="Home" class="text-decoration-none text-cinza-dark">To-do List App</a>
+                            <a asp-action="Index" asp-controller="Home"
+                                class="text-decoration-none text-cinza-dark">To-do List App</a>
                         </h2>
                     </div>
                     <nav class="menu">
                         <ul class="list-unstyled mb-0 d-flex gap-3 align-items-center">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li>Olá, @User.Identity.Name!</li>
-                            <li><a asp-action="Index" asp-controller="Usuario" class="text-decoration-none btn btn-principal">Meu perfil</a></li>
-                            <li><a asp-action="Index" asp-controller="Lista" class="text-decoration-none btn btn-principal">Listas</a></li>
-                            <li><a asp-action="Logout" asp-controller="Usuario" class="text-decoration-none btn btn-danger">Log-out</a></li>
-                        } else
-                        {
-                            <li><a asp-action="Login" asp-controller="Usuario" class="btn btn-principal text-decoration-none">Login</a></li>
-                            <li><a asp-action="Create" asp-controller="Usuario" class="btn btn-principal-dark text-decoration-none">Registre-se</a></li>
-                        }
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>Olá, @User.Identity.Name!</li>
+                                <li><a asp-action="Index" asp-controller="Usuario"
+                                        class="text-decoration-none btn btn-principal">Meu perfil</a></li>
+                                <li><a asp-action="Index" asp-controller="Lista"
+                                        class="text-decoration-none btn btn-principal">Listas</a></li>
+                                <li><a asp-action="Logout" asp-controller="Usuario"
+                                        class="text-decoration-none btn btn-danger">Log-out</a></li>
+                            }
+                            else
+                            {
+                                <li><a asp-action="Login" asp-controller="Usuario"
+                                        class="btn btn-principal text-decoration-none">Login</a></li>
+                                <li><a asp-action="Create" asp-controller="Usuario"
+                                        class="btn btn-principal-dark text-decoration-none">Registre-se</a></li>
+                            }
                         </ul>
                     </nav>
                 </div>
@@ -40,7 +47,23 @@
         </div>
     </header>
     <main>
-    @RenderBody()
+        @{
+            if (@ViewBag.MensagemErro is not null)
+            {
+                <section class="avisos pt-4">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-danger w-100">
+                                    @ViewBag.MensagemErro
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            }
+        }
+        @RenderBody()
     </main>
 </body>
 

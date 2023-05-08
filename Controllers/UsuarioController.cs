@@ -135,11 +135,7 @@ public class UsuarioController : Controller
         ModelState.Remove("IdUsuario");
         if (!ModelState.IsValid)
         {
-            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-            {
-                Console.WriteLine(error.ErrorMessage);
-            }
-            return RedirectToAction("Index", "Home");
+            return View(usuario);
         }
         if (_db.Usuarios.FirstOrDefault(u => u.Email == usuario.Email && u.IdUsuario != usuariooriginal.IdUsuario) is not null)
         {

@@ -1,12 +1,27 @@
 let botaoAbrir = window.document.querySelector("#criarLista");
-let modal = window.document.querySelector("#criarListaModal");
+let modalCriar = window.document.querySelector("#criarListaModal");
+let itensLista = window.document.querySelectorAll(".lista-item");
 
 botaoAbrir.addEventListener("click", () => {
-    if (modal.classList.contains("d-none")) {
-        modal.classList.remove("d-none");
+    if (modalCriar.classList.contains("d-none")) {
+        modalCriar.classList.remove("d-none");
     }
-    botaoFechar = modal.querySelector(".fechar-modal");
+    let botaoFechar = modalCriar.querySelector(".fechar-modal");
     botaoFechar.addEventListener("click", () => {
-        modal.classList.add("d-none");
+        modalCriar.classList.add("d-none");
     })
 })
+
+itensLista.forEach((i) => {
+    btnEditar = i.querySelector(".botao-editar");
+    btnEditar.addEventListener("click", () => {
+        let modalEditar = i.querySelector('.editar-lista');
+        if(modalEditar.classList.contains("d-none")) {
+            modalEditar.classList.remove("d-none");
+        }
+        let botaoFechar = modalEditar.querySelector(".fechar-modal");
+        botaoFechar.addEventListener("click", () => {
+            modalEditar.classList.add("d-none");
+        })
+    })
+});
