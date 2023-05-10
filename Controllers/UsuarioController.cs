@@ -120,18 +120,11 @@ public class UsuarioController : Controller
             return View(login);
         }
     }
-    public async Task<IActionResult> Logout(string returnUrl = null)
+    public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(
             CookieAuthenticationDefaults.AuthenticationScheme);
-
-        if (returnUrl is null)
-        {
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        return Redirect(returnUrl);
+        return RedirectToAction("Index", "Home");
     }
 
     [HttpGet]
