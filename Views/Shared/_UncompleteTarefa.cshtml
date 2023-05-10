@@ -2,7 +2,7 @@
 
 <form asp-action="Uncomplete" asp-controller="Tarefa">
     <input type="hidden" asp-for="@Model.IdTarefa" value="@Model.IdTarefa">
-    <button type="submit"
+    <button type="submit" title="Marca como não concluída"
         class="btn btn-principal d-flex align-items-center justify-content-center p-3 botao-concluir rounded-circle">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
             class="bi bi-arrow-return-left" viewBox="0 0 16 16">

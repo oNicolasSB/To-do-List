@@ -1,0 +1,34 @@
+#menuBurger {
+    width: 100%;
+    height: calc(100% - 5.125rem);
+    left: 0;
+    position: absolute;
+    z-index: 8001;
+    bottom: 0;
+    max-height: 0;
+    padding: 0;
+    transition: all 0.2s;
+    overflow: hidden;
+
+    &.active {
+        padding: 3rem;
+        max-height: 100%;
+    }
+}
+
+#btnBurger {
+    .fechar {
+        display: none;
+    }
+    .abrir {
+        display: block;
+    }
+    &.active {
+        .abrir {
+            display: none;
+        }
+        .fechar {
+            display: block;
+        }
+    }
+}

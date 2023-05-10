@@ -2,13 +2,16 @@
     &.active {
         @extend .bg-cinza-light;
         border: 1px solid $principal-dark;
+
         a {
             pointer-events: none;
+
             p {
                 @extend .text-cinza-dark;
             }
         }
     }
+
     transition: all 0.2s;
 
     &:hover {
@@ -21,22 +24,55 @@
 }
 
 .card-modal {
+    min-width: 15rem;
     z-index: 8001;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 500px;
+    max-width: 31.25rem;
 }
 
 #abrirArquivo {
     svg {
         transition: all 0.2s;
     }
+
     &.active {
         svg {
             transform: rotate(180deg);
         }
+    }
+}
+
+#listaLateral {
+    transition: all 0.2s;
+    z-index: 8000;
+    &.active {
+        display: block;
+        max-width: 100%;
+        @extend .bg-cinza-light;
+        @extend .p-4;
+    }
+    height: calc(100% - 5.125rem);
+    &.normal {
+        height: auto;
+        display: block;
+        max-width: 100%;
+        @extend .px-2;
+        @extend .py-0;
+    }    
+    left: 0;
+    bottom: 0;
+    display: block;
+    position: fixed;
+    max-width: 0px;
+    overflow: hidden;
+    @extend .py-4;
+    @extend .px-0;
+    @include media-breakpoint-up(lg) {
+        position: static;
+        display: block;
     }
 }

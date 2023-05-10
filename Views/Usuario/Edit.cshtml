@@ -3,8 +3,8 @@
 <section class="cadastro py-5">
     <div class="container">
         <div class="row">
-            <div class="col-6 offset-3">
-                <form asp-action="Edit" class="p-5 bg-cinza-light rounded-3">
+            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                <form asp-action="Edit" class="px-2 py-5 px-sm-5 bg-cinza-light rounded-3">
                     <input type="hidden" value=@Model.IdUsuario asp-for="@Model.IdUsuario">
                 <h2 class="text-principal-dark text-center mb-3">Alterar Dados</h2>
                     <div class="col-12 mb-3 email">
@@ -22,9 +22,9 @@
                         <span class="text-danger form-text" asp-validation-for="@Model.Nome"></span>
                     </div>
                     <div
-                        class="col-12 text-center mt-5 d-flex flex-column justify-content-center align-items-center gap-4">
-                        <button type="submit" class="btn btn-principal-dark botao">Alterar</button>
-                        <a asp-action="Index" asp-controller="Usuario" class="btn btn-principal">Cancelar</a>
+                        class="col-12 text-center mt-5 d-flex flex-column flex-sm-row justify-content-center align-items-center gap-4">
+                        <button type="submit" class="btn btn-principal-dark botao px-5" title="Alterar">Alterar</button>
+                        <a asp-action="Index" asp-controller="Usuario" class="btn btn-principal px-5" title="Cancelar">Cancelar</a>
                     </div>
                 </form>
             </div>

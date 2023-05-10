@@ -6,21 +6,17 @@ const wrap = require('gulp-wrap');
 const babel = require('gulp-babel');
 const { src, dest } = require('gulp');
 
-const bootstrapJsFiles = [
-  'node_modules/bootstrap/dist/js/bootstrap.bundle.js'
-];
-
 // compilar sass
 gulp.task('sass', function () {
-  const bootstrapCssFiles = [
-    'node_modules/bootstrap/dist/css/bootstrap.css'
-  ];
-
-  return gulp.src(bootstrapCssFiles.concat('wwwroot/css/scss/**/*.scss'))
+  return gulp.src('wwwroot/css/scss/**/*.scss')
     .pipe(sass({ outputStyle: 'compressed' }))
     .pipe(concat('main.min.css'))
     .pipe(gulp.dest('wwwroot/css'));
 });
+
+const bootstrapJsFiles = [
+  'node_modules/bootstrap/dist/js/bootstrap.bundle.js'
+];
 
 // compila o código do ES6 para o ES5 com o babel
 gulp.task('babel', () =>

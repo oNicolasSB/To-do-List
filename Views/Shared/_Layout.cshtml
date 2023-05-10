@@ -21,7 +21,7 @@
                                 class="text-decoration-none text-cinza-dark">To-do List App</a>
                         </h2>
                     </div>
-                    <nav class="menu">
+                    <nav class="menu d-none d-md-block">
                         <ul class="list-unstyled mb-0 d-flex gap-3 align-items-center">
                             @if (User.Identity.IsAuthenticated)
                             {
@@ -42,10 +42,45 @@
                             }
                         </ul>
                     </nav>
+                    <button title="Abrir Menu Mobile" id="btnBurger" class="btn btn-principal-dark d-md-none d-flex align-items-center justify-content-center p-2">
+                        <svg class="abrir" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                        </svg>
+                        <svg class="fechar" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path
+                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
+    <div id="menuBurger" class="bg-cinza-light">
+        <nav class="menu-burger">
+            <ul class="list-unstyled mb-0 d-flex flex-column gap-3 align-items-center">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>Olá, @User.Identity.Name!</li>
+                    <li><a asp-action="Index" asp-controller="Usuario" class="text-decoration-none btn btn-principal">Meu
+                            perfil</a></li>
+                    <li><a asp-action="Index" asp-controller="Lista"
+                            class="text-decoration-none btn btn-principal">Listas</a></li>
+                    <li><a asp-action="Logout" asp-controller="Usuario"
+                            class="text-decoration-none btn btn-danger">Log-out</a></li>
+                }
+                else
+                {
+                    <li><a asp-action="Login" asp-controller="Usuario"
+                            class="btn btn-principal text-decoration-none">Login</a></li>
+                    <li><a asp-action="Create" asp-controller="Usuario"
+                            class="btn btn-principal-dark text-decoration-none">Registre-se</a></li>
+                }
+            </ul>
+        </nav>
+    </div>
     <main>
         @{
             if (@ViewBag.MensagemErro is not null)

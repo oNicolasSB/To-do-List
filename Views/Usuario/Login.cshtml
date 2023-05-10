@@ -28,8 +28,8 @@
 <section class="login py-5">
     <div class="container">
         <div class="row">
-            <div class="col-6 offset-3">
-                <form asp-action="Login" class="p-5 bg-cinza-light rounded-3">
+            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                <form asp-action="Login" class="px-2 py-5 px-sm-5 bg-cinza-light rounded-3">
                     <h2 class="text-principal-dark text-center mb-3">Login</h2>
                     <div class="col-12 mb-3 email">
                         <p class="mb-0">
@@ -50,7 +50,7 @@
                         <label class="form-label" asp-for="@Model.Lembrar"><span id="lembrar">Lembrar de mim.</span></label>
                     </div>
                     <div class="col-12 text-center mt-5 d-flex flex-column justify-content-center align-items-center gap-4">
-                            <button type="submit" class="btn btn-principal-dark botao">Login</button>
+                            <button type="submit" class="btn btn-principal-dark botao px-5" title="Login">Login</button>
                             <p>Não tem uma conta? <a asp-action="Create"
                                 asp-controller="Usuario">Registre-se.</a> </p>
                     </div>

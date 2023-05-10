@@ -3,8 +3,8 @@
 <section class="cadastro py-5">
     <div class="container">
         <div class="row">
-            <div class="col-6 offset-3">
-                <form asp-action="AltSenha" asp-controller="Usuario" class="p-5 bg-cinza-light rounded-3">
+            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                <form asp-action="AltSenha" asp-controller="Usuario" class="px-2 py-5 px-sm-5 bg-cinza-light rounded-3">
                     <h2 class="text-principal-dark text-center mb-3">Alterar Senha</h2>
                     <div class="col-12 mb-3 senha">
                         <p class="mb-0">
@@ -13,17 +13,17 @@
                         <input class="form-control" type="password" asp-for=@Model.SenhaOriginal>
                         <span class="text-danger form-text" asp-validation-for="@Model.SenhaOriginal"></span>
                     </div>
-                    <div class="col-12 mb-3 nova-senha row">
-                        <div class="col-6">
+                    <div class="col-12 mb-3 nova-senha d-flex flex-column flex-sm-row gap-3">
+                        <div class="w-100">
                             <p class="mb-0">
                                 <label class="form-label" asp-for="@Model.NovaSenha"><span>Nova senha: </span></label>
                             </p>
                             <input class="form-control" type="password" asp-for=@Model.NovaSenha>
                             <span class="text-danger form-text" asp-validation-for="@Model.NovaSenha"></span>
                         </div>
-                        <div class="col-6">
+                        <div class="w-100">
                             <p class="mb-0">
-                                <label class="form-label" asp-for="@Model.ConfNovaSenha"><span>Confirmação da nova
+                                <label class="form-label" asp-for="@Model.ConfNovaSenha"><span>Confirme a nova
                                         senha: </span></label>
                             </p>
                             <input class="form-control" type="password" asp-for=@Model.ConfNovaSenha>
@@ -31,9 +31,9 @@
                         </div>
                     </div>
                     <div
-                        class="col-12 text-center mt-5 d-flex flex-column justify-content-center align-items-center gap-4">
-                        <button type="submit" class="btn btn-danger botao">Alterar</button>
-                        <a asp-action="Index" asp-controller="Usuario" class="btn btn-principal">Cancelar</a>
+                        class="col-12 text-center mt-5 d-flex flex-column flex-sm-row justify-content-center align-items-center gap-4">
+                        <button type="submit" class="btn btn-danger botao px-5" title="Alterar">Alterar</button>
+                        <a asp-action="Index" asp-controller="Usuario" class="btn btn-principal px-5">Cancelar</a>
                     </div>
                 </form>
             </div>
