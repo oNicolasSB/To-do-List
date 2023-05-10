@@ -1,8 +1,12 @@
 .lista-item {
     &.active {
+        @extend .bg-cinza-light;
+        border: 1px solid $principal-dark;
         a {
             pointer-events: none;
-            opacity: 0.8;
+            p {
+                @extend .text-cinza-dark;
+            }
         }
     }
     transition: all 0.2s;
@@ -19,34 +23,20 @@
 .card-modal {
     z-index: 8001;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.adicionar-lista {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 500px;
-}
-.adicionar-tarefa {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     max-width: 500px;
 }
 
-.editar-lista {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 500px;
-}
-.deletar-lista {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 500px;
+#abrirArquivo {
+    svg {
+        transition: all 0.2s;
+    }
+    &.active {
+        svg {
+            transform: rotate(180deg);
+        }
+    }
 }

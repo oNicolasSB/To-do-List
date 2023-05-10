@@ -17,6 +17,7 @@ public class ListaController : Controller
     {
         _db = db;
     }
+
     [Authorize]
     public IActionResult Index()
     {
@@ -26,7 +27,8 @@ public class ListaController : Controller
             ViewBag.MensagemErro = mensagemErro;
         }
         var usuario = _db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value));
-        var listas = _db.Listas.Where(a => a.FkUsuario == usuario.IdUsuario).ToList();
+        var listas = _db.Listas.Where(a => a.FkUsuario == usuario.IdUsuario && a.Arquivada == false).ToList();
+        ViewBag.listasArquivadas = _db.Listas.Where(l => l.FkUsuario == usuario.IdUsuario && l.Arquivada == true).ToList();
         return View(listas);
     }
     [HttpGet]
@@ -40,13 +42,23 @@ public class ListaController : Controller
         }
         var usuario = _db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value));
         var lista = _db.Listas.Find(id);
-        if (lista.FkUsuario != usuario.IdUsuario) {
+        if (lista.FkUsuario != usuario.IdUsuario)
+        {
             ViewBag.mensagemErro = "Você não tem permissão para ver esta lista";
             return RedirectToAction("Index", "Home");
         }
-        ViewBag.listas = _db.Listas.Where(l => l.FkUsuario == usuario.IdUsuario).ToList();
+        ViewBag.listas = _db.Listas.Where(l => l.FkUsuario == usuario.IdUsuario && l.Arquivada == false).ToList();
+        ViewBag.listasArquivadas = _db.Listas.Where(l => l.FkUsuario == usuario.IdUsuario && l.Arquivada == true).ToList();
         ViewBag.tarefasConcluidas = _db.Tarefas.Where(t => t.FkLista == lista.IdLista && t.Concluido == true).ToList();
         ViewBag.tarefasPendentes = _db.Tarefas.Where(t => t.FkLista == lista.IdLista && t.Concluido == false).ToList();
+        if (_db.Listas.Where(l => l.FkUsuario == usuario.IdUsuario && l.Arquivada == true).FirstOrDefault(l => l.IdLista == lista.IdLista) == null)
+        {
+            ViewBag.display = "d-none";
+        }
+        else
+        {
+            ViewBag.active = "active";
+        }
         return View(lista);
     }
     [HttpPost]
@@ -81,6 +93,11 @@ public class ListaController : Controller
     {
         var usuario = _db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value));
         var listaOriginal = _db.Listas.Find(lista.IdLista);
+        if (listaOriginal is null)
+        {
+            TempData["MensagemErro"] = "Você deve editar uma lista que existe";
+            return RedirectToAction("Index", "Lista");
+        }
         if (_db.Listas.FirstOrDefault(l => l.Titulo == lista.Titulo && l.IdLista != lista.IdLista) is not null)
         {
             TempData["MensagemErro"] = "Nome de lista já cadastrado.";
@@ -107,6 +124,24 @@ public class ListaController : Controller
             return RedirectToAction("Index", "Lista");
         }
         _db.Listas.Remove(lista);
+        _db.SaveChanges();
+        return RedirectToAction("Index", "Lista");
+    }
+    [HttpPost]
+    [Authorize]
+    public IActionResult Archive(Lista lista)
+    {
+        var listaOriginal = _db.Listas.Find(lista.IdLista);
+        listaOriginal.Arquivada = true;
+        _db.SaveChanges();
+        return RedirectToAction("Index", "Lista");
+    }
+    [HttpPost]
+    [Authorize]
+    public IActionResult Unarchive(Lista lista)
+    {
+        var listaOriginal = _db.Listas.Find(lista.IdLista);
+        listaOriginal.Arquivada = false;
         _db.SaveChanges();
         return RedirectToAction("Index", "Lista");
     }

@@ -1,5 +1,30 @@
 @model LoginViewModel
 
+<section class="aviso">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                        @{
+            if (@ViewBag.MensagemValidacao is not null)
+            {
+                <section class="avisos pt-4">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-success w-100">
+                                    @ViewBag.MensagemValidacao
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            }
+        }
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="login py-5">
     <div class="container">
         <div class="row">

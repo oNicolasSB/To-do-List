@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -18,6 +19,13 @@ public class UsuarioController : Controller
         _db = db;
     }
 
+    public bool ValidarSenha(string senha)
+    {
+        string pattern = @"^(?=.*[A-Z])(?=.*\d)(?=.*\W).*$";
+        bool Validar = Regex.IsMatch(senha, pattern);
+
+        return Validar;
+    }
     [Authorize]
     public IActionResult Index()
     {
@@ -40,19 +48,36 @@ public class UsuarioController : Controller
             ModelState.AddModelError("Email", "Este e-mail já foi cadastrado");
             return View(usuarioViewModel);
         }
+        string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+        if (!Regex.IsMatch(usuarioViewModel.Email, pattern))
+        {
+            ModelState.AddModelError("Email", "Insira um e-mail válido!");
+            return View(usuarioViewModel);
+        }
+        if (!ValidarSenha(usuarioViewModel.Senha))
+        {
+            ModelState.AddModelError("Senha", "A senha deve conter pelo menos uma letra maiúscula, um número e um símbolo");
+            return View(usuarioViewModel);
+        }
         var usuario = new Usuario();
         usuario.Nome = usuarioViewModel.Nome;
         usuario.Email = usuarioViewModel.Email;
         usuario.Senha = HashPassword(usuarioViewModel.Senha, 10);
         _db.Usuarios.Add(usuario);
         _db.SaveChanges();
-        return RedirectToAction("Index", "Home");
+        TempData["MensagemValidacao"] = "Conta criada com sucesso! Faça seu login.";
+        return RedirectToAction("Login", "Usuario");
     }
 
     [HttpGet]
     public IActionResult Login()
     {
         var login = new LoginViewModel();
+        var MensagemValidacao = TempData["MensagemValidacao"] as string;
+        if (!string.IsNullOrEmpty(MensagemValidacao))
+        {
+            ViewBag.MensagemValidacao = MensagemValidacao;
+        }
         return View(login);
     }
     [HttpPost]
@@ -124,7 +149,7 @@ public class UsuarioController : Controller
     [Authorize]
     public IActionResult Edit(Usuario usuario)
     {
-        if(_db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value)).IdUsuario != usuario.IdUsuario)
+        if (_db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value)).IdUsuario != usuario.IdUsuario)
         {
             return RedirectToAction("Index", "Home");
         }
@@ -160,9 +185,14 @@ public class UsuarioController : Controller
     [Authorize]
     public IActionResult AltSenha(AlterarSenhaViewModel altSenha)
     {
-        if(!ModelState.IsValid) return View(altSenha);
+        if (!ModelState.IsValid) return View(altSenha);
         var usuario = _db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value));
-        if(usuario is null) return RedirectToAction("Index", "Home");
+        if (usuario is null) return RedirectToAction("Index", "Home");
+        if (!ValidarSenha(altSenha.NovaSenha))
+        {
+            ModelState.AddModelError("NovaSenha", "A senha deve conter pelo menos uma letra maiúscula, um número e um símbolo");
+            return View(altSenha);
+        }
         usuario.Senha = HashPassword(altSenha.NovaSenha, 10);
         _db.SaveChanges();
         return RedirectToAction("Index", "Usuario");
