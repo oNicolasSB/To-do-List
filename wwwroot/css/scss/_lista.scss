@@ -1,4 +1,10 @@
 .lista-item {
+    &.active {
+        a {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+    }
     transition: all 0.2s;
 
     &:hover {
@@ -10,7 +16,19 @@
     }
 }
 
+.card-modal {
+    z-index: 8001;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
 .adicionar-lista {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 500px;
+}
+.adicionar-tarefa {
     position: absolute;
     top: 50%;
     left: 50%;

@@ -1,0 +1,140 @@
+@model Lista
+@{
+    ViewBag.FkLista = Model.IdLista;
+}
+
+<section class="principal py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <h3 class="text-principal-dark mb-3 ">Listas: </h3>
+                <ul class="list-unstyled mb-0 d-flex flex-column gap-3">
+                    @foreach (var item in ViewBag.listas)
+                    {
+                        <li
+                            class="bg-cinza-dark rounded-3 d-flex align-items-center justify-content-between lista-item @(item.IdLista == Model.IdLista ? "active" : "")">
+                            <a asp-action="Details" asp-controller="Lista" asp-route-id="@item.IdLista"
+                                class="w-100 p-3 h-100 text-decoration-none d-flex justify-content-between align-items-center">
+                                <p class="text-cinza-light mb-0 titulo">@item.Titulo</p>
+                            </a>
+                            <button
+                                class="btn btn-warning d-flex mx-2 align-items-center justify-content-center p-2 botao-editar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path
+                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd"
+                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg>
+                            </button>
+                            <div class="editar-lista card-modal p-3 bg-cinza-light rounded-3 d-none">
+                                <partial name="_Edit" model="@item"></partial>
+                            </div>
+                            <button
+                                class="btn btn-danger d-flex mx-2 align-items-center justify-content-center p-2 botao-deletar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg>
+                            </button>
+                            <div class="deletar-lista card-modal p-3 bg-cinza-light rounded-3 d-none">
+                                <partial name="_Delete" model="@item"></partial>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                <hr class="text-principal my-3">
+                </hr>
+                <button id="criarLista" class="btn btn-principal-dark p-3 w-100">Adicionar</button>
+            </div>
+            <div class="col-8">
+                <div class="titulo d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-principal-dark">Tarefas a fazer: </h3>
+                    <button id="criarTarefa"
+                        class="add-tarefa btn btn-principal-dark d-flex align-items-center justify-content-center p-3 rounded-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="tarefas d-flex flex-column gap-4">
+                    @foreach (var tarefa in ViewBag.tarefasPendentes)
+                    {
+                        <div class="bg-cinza-light rounded-3 p-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="text-principal-dark">@tarefa.Titulo</h4>
+                            </div>
+                            <hr>
+                            <p>@tarefa.Descricao</p>
+                            <p>Entrega Estimada: @tarefa.EntregaEstimada.ToString("dd/MM/yyyy") @{
+                                    @if (!tarefa.Concluido)
+                                    {
+                                        TimeSpan restante = tarefa.EntregaEstimada - DateTime.Now;
+                                        if (restante.Days >= 7)
+                                        {
+                                            <span class="text-success">Restam @restante.Days dias</span>
+                                        }
+                                        else if ((7 > restante.Days) && (restante.Days >= 0))
+                                        {
+                                            <span class="text-warning">Restam @restante.Days dias</span>
+                                        }
+                                        else
+                                        {
+                                            var restantePositivo = restante.Days * -1;
+
+                                            <span class="text-danger">A tarefa está atrasada @restantePositivo dias</span>
+                                        }
+                                    }
+                                }
+                            </p>
+                        </div>
+                    }
+                    <hr>
+                    <h3 class="text-principal-dark">Tarefas Concluídas: </h3>
+                    @foreach (var tarefa in ViewBag.tarefasConcluidas)
+                    {
+                        <div class="bg-cinza-light rounded-3 p-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="text-principal-dark">@tarefa.Titulo</h4>
+                            </div>
+                            <hr>
+                            <p>@tarefa.Descricao</p>
+                            <p>Entrega Estimada: @tarefa.EntregaEstimada.ToString("dd/MM/yyyy") @{
+                                    @if (!tarefa.Concluido)
+                                    {
+                                        TimeSpan restante = tarefa.EntregaEstimada - DateTime.Now;
+                                        if (restante.Days >= 7)
+                                        {
+                                            <span class="text-success">Restam @restante.Days dias</span>
+                                        }
+                                        else if ((7 > restante.Days) && (restante.Days >= 0))
+                                        {
+                                            <span class="text-warning">Restam @restante.Days dias</span>
+                                        }
+                                        else
+                                        {
+                                            var restantePositivo = restante.Days * -1;
+
+                                            <span class="text-danger">A tarefa está atrasada @restantePositivo dias</span>
+                                        }
+                                    }
+                                }
+                            </p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div id="criarListaModal" class="card-modal adicionar-lista p-3 bg-cinza-light rounded-3 d-none">
+                <partial name="_Create" model="@new Lista()"></partial>
+            </div>
+            <div id="criarTarefaModal" class="card-modal adicionar-tarefa p-3 bg-cinza-light rounded-3 d-none">
+                <partial name="_CreateTarefa" model="@new Tarefa()"></partial>
+            </div>
+        </div>
+    </div>
+</section>

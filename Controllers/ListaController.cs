@@ -29,6 +29,26 @@ public class ListaController : Controller
         var listas = _db.Listas.Where(a => a.FkUsuario == usuario.IdUsuario).ToList();
         return View(listas);
     }
+    [HttpGet]
+    [Authorize]
+    public IActionResult Details(int id)
+    {
+        var mensagemErro = TempData["MensagemErro"] as string;
+        if (!string.IsNullOrEmpty(mensagemErro))
+        {
+            ViewBag.MensagemErro = mensagemErro;
+        }
+        var usuario = _db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value));
+        var lista = _db.Listas.Find(id);
+        if (lista.FkUsuario != usuario.IdUsuario) {
+            ViewBag.mensagemErro = "Você não tem permissão para ver esta lista";
+            return RedirectToAction("Index", "Home");
+        }
+        ViewBag.listas = _db.Listas.Where(l => l.FkUsuario == usuario.IdUsuario).ToList();
+        ViewBag.tarefasConcluidas = _db.Tarefas.Where(t => t.FkLista == lista.IdLista && t.Concluido == true).ToList();
+        ViewBag.tarefasPendentes = _db.Tarefas.Where(t => t.FkLista == lista.IdLista && t.Concluido == false).ToList();
+        return View(lista);
+    }
     [HttpPost]
     [Authorize]
     public IActionResult Create(Lista lista)

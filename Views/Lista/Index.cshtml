@@ -1,4 +1,7 @@
 @model List<Lista>
+@{
+    var id = ViewData["id"] as int?;
+}
 
 <section class="principal py-5">
     <div class="container">
@@ -9,7 +12,7 @@
                     @foreach (var item in Model)
                     {
                         <li class="bg-cinza-dark rounded-3 d-flex align-items-center justify-content-between lista-item">
-                            <a href="#"
+                            <a asp-action="Details" asp-controller="Lista" asp-route-id="@item.IdLista"
                                 class="w-100 p-3 h-100 text-decoration-none d-flex justify-content-between align-items-center">
                                 <p class="text-cinza-light mb-0 titulo">@item.Titulo</p>
                             </a>
@@ -23,7 +26,7 @@
                                         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                                 </svg>
                             </button>
-                            <div class="editar-lista p-3 bg-cinza-light rounded-3 d-none">
+                            <div class="editar-lista card-modal p-3 bg-cinza-light rounded-3 d-none">
                                 <partial name="_Edit" model="@item"></partial>
                             </div>
                             <button
@@ -34,7 +37,7 @@
                                         d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                 </svg>
                             </button>
-                            <div class="deletar-lista p-3 bg-cinza-light rounded-3 d-none">
+                            <div class="deletar-lista card-modal p-3 bg-cinza-light rounded-3 d-none">
                                 <partial name="_Delete" model="@item"></partial>
                             </div>
                         </li>
@@ -44,8 +47,14 @@
                 </hr>
                 <button id="criarLista" class="btn btn-principal-dark p-3 w-100">Adicionar</button>
             </div>
+            <div class="col-8 tarefas">
+                <div class="titulo d-flex justify-content-between align-items-center">
+                    <h3 class="text-principal-dark">Tarefas: </h3>
+                </div>
+                <h4>Suas tarefas aparecerão aqui.</h4>
+            </div>
 
-            <div id="criarListaModal" class="adicionar-lista p-3 bg-cinza-light rounded-3 d-none">
+            <div id="criarListaModal" class="card-modal adicionar-lista p-3 bg-cinza-light rounded-3 d-none">
                 <partial name="_Create" model="@new Lista()"></partial>
             </div>
         </div>
