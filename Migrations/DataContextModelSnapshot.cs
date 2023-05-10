@@ -7,7 +7,7 @@ using todolist.Data;
 
 #nullable disable
 
-namespace to_do_list.Migrations
+namespace todolist.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot

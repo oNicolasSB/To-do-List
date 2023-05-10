@@ -29,26 +29,19 @@ public class ListaController : Controller
         var listas = _db.Listas.Where(a => a.FkUsuario == usuario.IdUsuario).ToList();
         return View(listas);
     }
-    [HttpGet]
-    [Authorize]
-    public IActionResult Create()
-    {
-        var lista = new Lista();
-        return View(lista);
-    }
     [HttpPost]
     [Authorize]
     public IActionResult Create(Lista lista)
     {
+        lista.FkUsuario = Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value);
+        lista.Arquivada = false;
         var usuario = _db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value));
         if (_db.Listas.Where(l => l.FkUsuario == usuario.IdUsuario).Any(l => l.Titulo == lista.Titulo))
         {
             ModelState.AddModelError("Titulo", "Você não pode cadastrar 2 listas com o mesmo título.");
             return View(lista);
         }
-        lista.FkUsuario = _db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value)).IdUsuario;
-        lista.Arquivada = false;
-        ModelState.Remove("Usuario");
+
         if (!ModelState.IsValid)
         {
             var errors = ModelState.SelectMany(m => m.Value.Errors).Select(e => e.ErrorMessage);
@@ -66,13 +59,14 @@ public class ListaController : Controller
     [Authorize]
     public IActionResult Edit(Lista lista)
     {
+        var usuario = _db.Usuarios.Find(Convert.ToInt32(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Sid).Value));
         var listaOriginal = _db.Listas.Find(lista.IdLista);
         if (_db.Listas.FirstOrDefault(l => l.Titulo == lista.Titulo && l.IdLista != lista.IdLista) is not null)
         {
             TempData["MensagemErro"] = "Nome de lista já cadastrado.";
             return RedirectToAction("Index", "Lista");
         }
-        ModelState.Remove("Usuario");
+        lista.Usuario = usuario;
         if (!ModelState.IsValid)
         {
             TempData["MensagemErro"] = "Insira um título válido.";
@@ -80,6 +74,19 @@ public class ListaController : Controller
         }
 
         listaOriginal.Titulo = lista.Titulo;
+        _db.SaveChanges();
+        return RedirectToAction("Index", "Lista");
+    }
+    [HttpPost]
+    [Authorize]
+    public IActionResult Delete(Lista lista)
+    {
+        if (_db.Tarefas.FirstOrDefault(t => t.FkLista == lista.IdLista) is not null)
+        {
+            TempData["MensagemErro"] = "Você não pode deletar uma lista que ainda contenha tarefas!";
+            return RedirectToAction("Index", "Lista");
+        }
+        _db.Listas.Remove(lista);
         _db.SaveChanges();
         return RedirectToAction("Index", "Lista");
     }

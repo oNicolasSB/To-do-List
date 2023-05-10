@@ -8,11 +8,11 @@ using todolist.Data;
 
 #nullable disable
 
-namespace to_do_list.Migrations
+namespace todolist.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230506144251_dev1")]
-    partial class dev1
+    [Migration("20230510012701_v1.1")]
+    partial class v11
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

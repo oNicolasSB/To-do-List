@@ -24,4 +24,15 @@ itensLista.forEach((i) => {
             modalEditar.classList.add("d-none");
         })
     })
+    btnDeletar = i.querySelector(".botao-deletar");
+    btnDeletar.addEventListener("click", () => {
+        let modalDeletar = i.querySelector('.deletar-lista');
+        if(modalDeletar.classList.contains("d-none")) {
+            modalDeletar.classList.remove("d-none");
+        }
+        let botaoFechar = modalDeletar.querySelector(".fechar-modal");
+        botaoFechar.addEventListener("click", () => {
+            modalDeletar.classList.add("d-none");
+        })
+    })
 });

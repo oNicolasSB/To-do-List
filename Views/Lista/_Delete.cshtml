@@ -1,6 +1,6 @@
 @model Lista
 <div class="d-flex justify-content-between align-items-center">
-    <h3>Editar Lista</h3>
+    <h3 class="text-danger">Deletar Lista</h3>
     <button class="btn btn-danger d-flex align-items-center justify-content-center p-2 fechar-modal">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
             viewBox="0 0 16 16">
@@ -10,16 +10,14 @@
     </button>
 </div>
 
-<form asp-action="Edit" asp-controller="Lista">
+<form asp-action="Delete" asp-controller="Lista">
     <input type="hidden" asp-for="@Model.IdLista" value="@Model.IdLista">
     <div class="col-12 mb-3 nome">
-        <div class="d-flex justify-content-between">
-            <p class="mb-0">
-                <label class="form-label" asp-for="@Model.Titulo"><span>Nome: </span></label>
-            </p>
-        </div>
-        <input class="form-control" type="text" asp-for="@Model.Titulo">
-        <span class="text-danger form-text" asp-validation-for="@Model.Titulo"></span>
+        <h4>Tem certeza que deseja excluir esta lista?</h4>
+        <h4>Esta ação é <span class="text-danger">IRREVERSÍVEL.</span></h4>
     </div>
-    <button type="submit" class="btn btn-principal-dark botao px-4">Salvar</button>
+    <div class="botoes d-flex gap-5">
+        <button type="submit" class="btn btn-danger botao px-4">Excluir</button>
+        <button class="btn btn-principal-dark botao fechar-modal px-4">Cancelar</button>
+    </div>
 </form>

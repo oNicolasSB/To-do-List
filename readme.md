@@ -1,4 +1,4 @@
 Utilizando:\
-razor runtime compilation;
+razor runtime compilation;\
 sqlite;\
 entityFrameworkCore.Design;
