@@ -20,9 +20,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddHttpContextAccessor();
 
 //adição do serviço do banco de dados
+
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseSqlite("Data source=data.db");
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    // options.UseSqlite("Data source=data.db");
 });
 
 var app = builder.Build();
