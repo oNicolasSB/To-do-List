@@ -1,4 +1,4 @@
 Utilizando:\
 razor runtime compilation;\
-sqlite;\
+mysql;\
 entityFrameworkCore.Design;
