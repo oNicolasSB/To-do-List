@@ -1,0 +1,34 @@
+volumes:
+  todolistdata:
+
+
+networks:
+  frontend:
+  backend:
+
+
+services:
+  mysql:
+    image: "mysql"
+    volumes:
+      - todolistdata:/var/lib/mysql
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - bind-address=0.0.0.0
+
+  todolist:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - backend
+      - frontend
+    ports:
+      - 3000:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - DBHOST=mysql
+    depends_on:
+      - mysql

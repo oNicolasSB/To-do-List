@@ -11,7 +11,7 @@ using todolist.Data;
 namespace todolist.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240131195811_v.1.1_AlteracaoParaMysql")]
+    [Migration("20240201164853_v.1.1_AlteracaoParaMysql")]
     partial class v11_AlteracaoParaMysql
     {
         /// <inheritdoc />
