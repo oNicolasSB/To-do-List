@@ -1,0 +1,23 @@
+@model ListaViewModel
+<div class="d-flex justify-content-between align-items-center">
+    <h3 class="text-danger">Deletar Lista</h3>
+    <button class="btn btn-danger d-flex align-items-center justify-content-center p-2 fechar-modal" title="Fechar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+            viewBox="0 0 16 16">
+            <path
+                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+        </svg>
+    </button>
+</div>
+
+<form asp-action="Delete" asp-controller="Lista">
+    <input type="hidden" asp-for="@Model.IdLista" value="@Model.IdLista">
+    <div class="col-12 mb-3 nome">
+        <h4>Tem certeza que deseja excluir esta lista?</h4>
+        <h4>Esta ação é <span class="text-danger">IRREVERSÍVEL.</span></h4>
+    </div>
+    <div class="botoes d-flex gap-5">
+        <button type="submit" class="btn btn-danger botao px-4" title="Excluir">Excluir</button>
+        <button type="button" class="btn btn-principal-dark botao fechar-modal px-4" title="Cancelar">Cancelar</button>
+    </div>
+</form>

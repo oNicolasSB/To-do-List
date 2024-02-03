@@ -1,0 +1,24 @@
+@model ListaViewModel
+<div class="d-flex justify-content-between align-items-center">
+    <h3>Adicionar Lista</h3>
+    <button class="btn btn-danger d-flex align-items-center justify-content-center p-2 fechar-modal" title="Fechar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+            viewBox="0 0 16 16">
+            <path
+                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+        </svg>
+    </button>
+</div>
+
+<form asp-action="Create" asp-controller="Lista">
+    <div class="col-12 mb-3 nome">
+        <div class="d-flex justify-content-between">
+            <p class="mb-0">
+                <label class="form-label" asp-for="@Model.Titulo"><span>Título: </span></label>
+            </p>
+        </div>
+        <input class="form-control" type="text" asp-for="@Model.Titulo">
+        <span class="text-danger form-text" asp-validation-for="@Model.Titulo"></span>
+    </div>
+    <button type="submit" class="btn btn-principal-dark botao" title="Adicionar">Adicionar</button>
+</form>

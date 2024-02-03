@@ -1,0 +1,122 @@
+@model List<ListaViewModel>
+@{
+    var id = ViewData["id"] as int?;
+}
+
+<section class="principal py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-4" id="listaLateral">
+                <div class="titulo d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="text-principal-dark mb-0">Listas: </h3>
+                    <button type="button" id="fecharListaLateral" title="Fechar Lista Lateral"
+                        class="btn btn-danger p-3 d-flex align-items-center justify-content-center rounded-circle d-lg-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path
+                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                        </svg>
+                    </button>
+                </div>
+                <ul class="list-unstyled mb-0 d-flex flex-column gap-3">
+                    @foreach (var item in Model)
+                    {
+                        <li class="bg-cinza-dark rounded-3 d-flex align-items-center justify-content-between lista-item">
+                            <a asp-action="Details" asp-controller="Lista" asp-route-id="@item.IdLista"
+                                class="w-100 p-3 h-100 text-decoration-none d-flex justify-content-between align-items-center">
+                                <p class="text-cinza-light mb-0 titulo">@item.Titulo</p>
+                            </a>
+                            <partial name="_Archive" model="@item"></partial>
+                            <button title="Editar"
+                                class="btn btn-warning d-flex mx-2 align-items-center justify-content-center p-2 botao-editar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path
+                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd"
+                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg>
+                            </button>
+                            <div class="editar-lista card-modal p-3 bg-cinza-light rounded-3 d-none">
+                                <partial name="_Edit" model="@item"></partial>
+                            </div>
+                            <button title="Deletar"
+                                class="btn btn-danger d-flex mx-2 align-items-center justify-content-center p-2 botao-deletar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg>
+                            </button>
+                            <div class="deletar-lista card-modal p-3 bg-cinza-light rounded-3 d-none">
+                                <partial name="_Delete" model="@item"></partial>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                <hr class="text-principal my-3">
+                <button id="criarLista" class="btn btn-principal-dark p-3 w-100">Adicionar</button>
+                <hr class="text-principal my-3">
+                <div class="titulo-arquivo d-flex align-items-center justify-content-between mb-3">
+                    <h3 class="text-principal-dark">Arquivo: </h3>
+                    <button id="abrirArquivo" title="Arquivo"
+                        class="btn btn-principal rounded-circle p-2 d-flex align-items-center justify-content-center @ViewBag.active">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
+                        </svg>
+                    </button>
+                </div>
+                <ul id="dropdownArquivo" class="list-unstyled mb-0 d-flex flex-column gap-3 @ViewBag.display">
+                    @foreach (var item in ViewBag.listasArquivadas)
+                    {
+                        <li class="bg-cinza-dark rounded-3 d-flex align-items-center justify-content-between lista-item">
+                            <a asp-action="Details" asp-controller="Lista" asp-route-id="@item.IdLista"
+                                class="w-100 p-3 h-100 text-decoration-none d-flex justify-content-between align-items-center">
+                                <p class="text-cinza-light mb-0 titulo">@item.Titulo</p>
+                            </a>
+                            <partial name="_Unarchive" model="@item"></partial>
+                            <button title="Editar"
+                                class="btn btn-warning d-flex mx-2 align-items-center justify-content-center p-2 botao-editar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path
+                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd"
+                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg>
+                            </button>
+                            <div class="editar-lista card-modal p-3 bg-cinza-light rounded-3 d-none">
+                                <partial name="_Edit" model="@item"></partial>
+                            </div>
+                            <button title="Deletar"
+                                class="btn btn-danger d-flex mx-2 align-items-center justify-content-center p-2 botao-deletar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg>
+                            </button>
+                            <div class="deletar-lista card-modal p-3 bg-cinza-light rounded-3 d-none">
+                                <partial name="_Delete" model="@item"></partial>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="col-12 col-lg-8 tarefas">
+                <button type="button" id="abrirListaLateral"
+                    class="btn btn-principal-dark p-3 d-flex align-items-center justify-content-center d-lg-none mb-3">Listas</button>
+                <div class="titulo d-flex justify-content-between align-items-center">
+                    <h3 class="text-principal-dark">Tarefas: </h3>
+                </div>
+                <h4>Suas tarefas aparecerão aqui.</h4>
+            </div>
+
+            <div id="criarListaModal" class="card-modal adicionar-lista p-3 bg-cinza-light rounded-3 d-none">
+                <partial name="_Create" model="@new ListaViewModel()"></partial>
+            </div>
+        </div>
+    </div>
+</section>
