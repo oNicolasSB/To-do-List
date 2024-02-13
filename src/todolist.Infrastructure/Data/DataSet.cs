@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using todolist.Domain;
 using static BCrypt.Net.BCrypt;
 
-namespace todolist.Infrastructure;
+namespace todolist.Infrastructure.Data;
 
 public class DataSet
 {

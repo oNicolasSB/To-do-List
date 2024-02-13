@@ -1,7 +1,7 @@
 using todolist.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace todolist.Infrastructure;
+namespace todolist.Infrastructure.Data;
 
 public class DataContext : DbContext
 {
